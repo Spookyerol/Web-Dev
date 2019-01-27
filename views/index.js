@@ -124,9 +124,8 @@ function registerHandler() {
         },
 
         error: function (res) {
-            console.log(res.responseText);
             console.log('Registration error');
-            alert(JSON.stringify(res.responseText));
+            alert('Registration Failed');
         },
     });
 }
@@ -139,7 +138,6 @@ function newComment() {
         data: JSON.stringify(content),
         contentType: "application/json; charset=utf-8",
         success: function (res) {
-            console.log(res);
             renderComments(res, "#comments");
             console.log("Comment added.");
         },
@@ -275,7 +273,6 @@ function searchUser() {
             html = template(res);
             $("#otherUserDetails").html(html);
             console.log("User found.");
-            console.log(res);
         },
 
         error: function (res) {

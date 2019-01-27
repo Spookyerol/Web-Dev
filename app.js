@@ -43,8 +43,6 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const session = require('client-sessions');
-const ejs = require('ejs');
-const handlebars = require('handlebars');
 
 function findUser(username) {
     for (let i in users) {
@@ -62,15 +60,12 @@ function filterComments(username) {
     return filtered;
 }
 
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
 }));
 
 app.use(express.static(__dirname + '/views'));
-app.engine('html', ejs.renderFile);
-app.set('view engine', 'ejs');
 
 app.get('/', function (req, res) {
     res.sendFile('index.html', { root: './views' });
@@ -285,7 +280,7 @@ app.post('/profile/password', function (req, res) {
 });
 
 app.post('/profile/details', function (req, res) {
-    const user = finduser(req.userSession.username);
+    const user = findUser(req.userSession.username);
     if (req.body.password != user.password) {
         res.status(401)
         res.send("Your password is incorrect.");

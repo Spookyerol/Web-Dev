@@ -1,0 +1,71 @@
+﻿.row[name="status"] {
+    box-shadow: 2px 4px 8px rgb(128, 128, 128);
+    border-radius: 5px;
+}
+
+.scroll {
+    max-height: 50vh;
+    overflow: auto;
+}
+
+.event-scroll {
+    max-height: 60vh;
+    overflow: auto;
+}
+
+.panel-body p {
+    float: left;
+    text-align: left;
+    width: 100%;
+    box-shadow: 1px 2px 4px rgb(128, 128, 128);
+    margin: 4px, 2px;
+    background-color: white;
+}
+
+.like-btn {
+    display: flex;
+    padding: 10px, 10px;
+    justify-content: flex-start;
+}
+
+.well[name="profile"] {
+    background-color: white;
+    box-shadow: 2px 4px 8px rgb(128, 128, 128);
+}
+
+.col-sm-12[name="like-btn"] {
+    border-radius: 3px;
+    margin: 10px 4px;
+}
+
+.col-sm-12[name="like-btn"] button {
+    float: left;
+    cursor: pointer;
+}
+
+.thumbnail {
+    box-shadow: 1px 2px 4px rgb(128, 128, 128);
+    background-color: #eaeaea;
+    margin-top: 12px;
+}
+
+.well {
+    background-color: white;
+    box-shadow: 1px 2px 4px rgb(128, 128, 128);
+}
+
+.commentbox {
+    width: 100%;
+    height: 10vh;
+    font-family: 'Courier New';
+    padding: 12px, 4px;
+    display: flex;
+}
+
+.padding {
+    height: 0.1vh;
+}
+
+.p {
+    word-wrap: break-word;
+}

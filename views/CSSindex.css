@@ -1,0 +1,65 @@
+﻿.main{
+    padding: 20px;
+    border : 2px solid #000000;
+}
+
+form h1{
+    font-size: 24px;
+    text-align: left;
+    color: #000000;
+}
+
+form h2{
+    font-size: 14px;
+    text-align: left;
+    color: #000000;
+}
+
+input[class="box"]{
+    width: 100%;
+    font-size: 16px;
+    padding: 12px 20px;
+    border: 2px solid #000000;
+    border-top: none;
+}
+
+input[class="form-control form-control sm"]{
+    width: 100%;
+}
+
+input[type=submit]{
+    width: 100%;
+    background-color: #ffffff;
+    border: none;
+    color: black;
+    padding: 16px 32px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 15px;
+}
+
+input:focus, select:focus, textarea:focus, button:focus{
+    outline: none;
+}
+
+input[class="box"]:hover {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 2px solid #000000;
+    border-top: none;
+}
+
+input[type=submit]:hover{
+    width: 100%;
+    background-color: #3269b5;
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 15px;
+}

@@ -8,7 +8,6 @@
 /* Style the links inside the navigation bar */
 .navbar a.navlink {
     float: left;
-    display: block;
     color: white;
     text-align: center;
     padding: 6px 10px;
@@ -89,6 +88,12 @@ footer a:hover {
     background-color: #555;
 }
 
+/*For admin page*/
+.header.data {
+    width: 100%;
+}
+
+/*Scaling for smaller screens*/
 @media screen and (max-width: 600px) {
     .navbar a:not(:first-child) {
         display: none;

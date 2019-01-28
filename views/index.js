@@ -25,6 +25,7 @@ function navigateTo(pageName) {
                 $("#registerPage").css("display", "none");
                 $("#mainPage").css("display", "none");
                 $("#userPage").css("display", "none");
+                $("#adminPage").css("display", "none");
                 $("#profilePage").css("display", "block");
                 let html = template(context);
                 $("#userDetails").html(html);
@@ -37,6 +38,7 @@ function navigateTo(pageName) {
                     $("#registerPage").css("display", "none");
                     $("#profilePage").css("display", "none");
                     $("#userPage").css("display", "none");
+                    $("#adminPage").css("display", "none");
                     $("#mainPage").css("display", "block");
                     let html = template(context);
                     $("#status").html(html);
@@ -49,6 +51,7 @@ function navigateTo(pageName) {
                         $("#registerPage").css("display", "none");
                         $("#profilePage").css("display", "none");
                         $("#mainPage").css("display", "none");
+                        $("#adminPage").css("display", "none");
                         $("#userPage").css("display", "block");
                         let html = template(context);
                         $("#otherStatus").html(html);
@@ -57,6 +60,11 @@ function navigateTo(pageName) {
                         template = Handlebars.compile(source);
                         html = template(res);
                         $("#otherUserDetails").html(html);
+                    }
+                    else {
+                        if (pageName === "admin") {
+
+                        }
                     }
                 }
             }
@@ -248,7 +256,7 @@ function changeDetails() {
             alert(res.responseText);
             console.log(res.responseText);
         }
-    })
+    });
 }
 
 function searchUser() {
@@ -259,68 +267,66 @@ function searchUser() {
         data: query,
         contentType: "application/json; charset=utf-8",
         success: function (res) {
-            let source = $("#otherUserStatus").html().trim();
-            let template = Handlebars.compile(source);
-            $("#registerPage").css("display", "none");
-            $("#profilePage").css("display", "none");
-            $("#mainPage").css("display", "none");
-            $("#userPage").css("display", "block");
-            let html = template(res);
-            $("#otherStatus").html(html);
-            renderComments(res.comments, "#userComments");
-            source = $("#userData").html().trim();
-            template = Handlebars.compile(source);
-            html = template(res);
-            $("#otherUserDetails").html(html);
-            console.log("User found.");
+            if (res.admin) {
+                let source = $("#adminData").html().trim();
+                let template = Handlebars.compile(source);
+                $("#registerPage").css("display", "none");
+                $("#profilePage").css("display", "none");
+                $("#mainPage").css("display", "none");
+                $("#userPage").css("display", "none");
+                $("#adminPage").css("display", "block");
+                $("#showDetails").empty();
+                for (let i in res.users) {
+                    let html = template(res.users[i]);
+                    $("#showDetails").append(html);
+                }
+                console.log("Navigated to admin.");
+            }
+            else {
+                let source = $("#otherUserStatus").html().trim();
+                let template = Handlebars.compile(source);
+                $("#registerPage").css("display", "none");
+                $("#profilePage").css("display", "none");
+                $("#mainPage").css("display", "none");
+                $("#adminPage").css("display", "none");
+                $("#userPage").css("display", "block");
+                let html = template(res);
+                $("#otherStatus").html(html);
+                renderComments(res.comments, "#userComments");
+                source = $("#userData").html().trim();
+                template = Handlebars.compile(source);
+                html = template(res);
+                $("#otherUserDetails").html(html);
+                console.log("User found.");
+            }
         },
 
         error: function (res) {
             alert(res.responseText);
             console.log(res.responseText);
         }
-    })
+    });
 }
 
-    /*let row = document.createElement("div");
-    row.classList ? row.classList.add('row') : col_3.className += ' row';
-    let col_3 = document.createElement("div");
-    col_3.classList ? col_3.classList.add('col-sm-3') : col_3.className += ' col-sm-3';
-    row.appendChild(col_3);
-    let well_3 = document.createElement("div");
-    well_3.classList ? well_3.classList.add('well', 'comment') : well_3.className += ' well' + 'comment';
-    col_3.appendChild(well_3);
-    let commenter = document.createElement("p");
-    commenter.appendChild(document.createTextNode(user));
-    well_3.appendChild(commenter);
-    let col_9 = document.createElement("div");
-    col_9.classList ? col_9.classList.add('col-sm-9') : col_9.className += ' col-sm-9';
-    row.appendChild(col_9);
-    let well_9 = document.createElement("div");
-    well_9.classList ? well_9.classList.add('well', 'comment') : well_9.className += ' well' + 'comment';
-    col_9.appendChild(well_9);
-    let comContent = document.createElement("p");
-    comContent.appendChild(document.createTextNode(content))
-    well_9.appendChild(comContent);*/
+function deleteUser() {
+    $.ajax({
+        url: "/people/delete",
+        type: "POST",
+        data: JSON.stringify({ "username": $("#banUsername").val() }),
+        contentType: "application/json; charset=utf-8",
+        success: function (res) {
+            $("#showDetails").empty();
+            let source = $("#adminData").html().trim();
+            let template = Handlebars.compile(source);
+            for (let i in res.users) {
+                let html = template(res.users[i]);
+                $("#showDetails").append(html);
+            }
+            alert("User successfully deleted.");
+        },
 
-//document.createComment(content)
-
-/*<div class="row">
-
-      <div class="col-sm-3">
-
-          <div class="well comment">
-              <p>John</p>
-          </div>
-
-      </div>
-
-      <div class="col-sm-9">
-
-          <div class="well comment">
-              <p>Just Forgot that I had to mention something about someone to someone about how I forgot something, but now I forgot it. Ahh, forget it! Or wait. I remember.... no I don't.</p>
-          </div>
-
-      </div>
-
-  </div>*/
+        error: function (res) {
+            alert(res.responseText);
+        }
+    });
+}

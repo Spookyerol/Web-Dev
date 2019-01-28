@@ -306,11 +306,22 @@ app.post('/profile/details', function (req, res) {
     });
 });
 
-app.get('/friend', function (req, res) {
-    res.render('friends.html');
-});
-
 app.get('/people/user', function (req, res) {
+    if (req.query.username === "/admin") {
+        if (req.userSession.access_token === "concertina") {
+            res.status(200);
+            res.json({
+                "users": users,
+                "admin": true
+            });
+            return 0;
+        }
+        else {
+            res.status(403);
+            res.send("Command only available to admin.");
+            return 0;
+        }
+    }
     let user = findUser(req.query.username);
     if (user) {
         res.status(200);
@@ -320,8 +331,9 @@ app.get('/people/user', function (req, res) {
             "forename": user.forename,
             "surname": user.surname,
             "userStatus": user.status,
-            "comments": filterComments(user.username)
-        })
+            "comments": filterComments(user.username),
+            "admin": false
+        });
     }
     else {
         res.status(404);
@@ -329,7 +341,36 @@ app.get('/people/user', function (req, res) {
     }
 });
 
+app.post('/people/delete', function (req, res) {
+    let user = findUser(req.body.username);
+    if (user) {
+        if (user.access_token === "concertina") {
+            res.status(400);
+            res.send("You are trying to delete an admin.");
+            return 0;
+        }
+        for (let i in users) {
+            if (user.username === users[i].username) {
+                users.splice(i, 1);
+                break;
+            }
+        }
+        let newComments = comments.filter(function (value, index, arr) {
+            return user.username !== value.username;
+        });
+        comments = newComments;
+        res.status(200);
+        res.json({
+            "users": users,
+            "admin": true
+        });
+        return 0;
+    }
+    else {
+        res.status(404);
+        res.send("This user does not exist.");
+        return 0;
+    }
+})
+
 module.exports = app.listen(3000);
-//app.listen(3000, function () {
-//    console.log("Live at Port 3000");
-//});

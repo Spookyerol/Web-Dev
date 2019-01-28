@@ -8,9 +8,8 @@
     overflow: auto;
 }
 
-.event-scroll {
-    max-height: 60vh;
-    overflow: auto;
+.submit {
+    width: 20%;
 }
 
 .panel-body p {
@@ -22,31 +21,9 @@
     background-color: white;
 }
 
-.like-btn {
-    display: flex;
-    padding: 10px, 10px;
-    justify-content: flex-start;
-}
-
 .well[name="profile"] {
     background-color: white;
     box-shadow: 2px 4px 8px rgb(128, 128, 128);
-}
-
-.col-sm-12[name="like-btn"] {
-    border-radius: 3px;
-    margin: 10px 4px;
-}
-
-.col-sm-12[name="like-btn"] button {
-    float: left;
-    cursor: pointer;
-}
-
-.thumbnail {
-    box-shadow: 1px 2px 4px rgb(128, 128, 128);
-    background-color: #eaeaea;
-    margin-top: 12px;
 }
 
 .well {

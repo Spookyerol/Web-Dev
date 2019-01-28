@@ -27,7 +27,7 @@
         <div class="col-sm-3" id="navlinks">
             <a class="active navlink" id="main" onclick="navigateTo('main')">Home</a>
             <a class="navlink" id="profile" onclick="navigateTo('profile')">My Profile</a>
-            <a href="javascript:void(0);" class="icon" onclick="makeBurger()">
+            <a href="javascript:void(0);" class=" navlink icon" onclick="makeBurger()">
                 <i class="fa fa-bars"></i>
             </a>
         </div>
@@ -123,7 +123,7 @@
                                 </div>
 
                                 <div class="row">
-                                    <input class="btn btn-primary" name="postComment" id="postComment" onclick="newComment()" value="Submit" /><br>
+                                    <input type="button" class="submit btn btn-primary" name="postComment" id="postComment" onclick="newComment()" value="Submit"><br>
                                 </div>
 
                                 <div class="padding"><!--Empty--></div>
@@ -258,20 +258,53 @@
         </div>
     </div>
 
-    <footer class="footer">
+    <!-- Admin Page -->
+    <div class="container page" style="display:none;" id="adminPage">
+        <div class="row main">
+            <form class="col-sm-12">
 
-        <div id="login_out">
-            <a href="/" class="logout" onclick="logoutHandler()">Logout</a>
-        </div>
+                <h1> Delete/Ban User </h1>
 
-        <div class="search-container">
-            <form>
-                <input type="text" id="userquery" placeholder="Search for a user.." name="search">
-                <a onclick="searchUser()">Submit</a>
+                <input class="box" type="text" name="username" id="banUsername" placeholder="Username to delete" required />
+                <input id="banUser" name="submitDetails" onclick="deleteUser()" value="Delete User" /><br>
+
             </form>
         </div>
 
-    </footer>
+        <div class="row scroll" name="details" id="showDetails">
+            <!--Where data is loaded-->
+        </div>
+
+        <script id="adminData" type="text/x-handlebars-template">
+            <div class="container squared">
+                <div class="row header data">
+                    <h1> {{username}} </h1>
+                </div>
+
+                <div class="user-content">
+                    <p class="row"> email: {{email}} </p>
+                    <p class="row"> Forename: {{forename}} </p>
+                    <p class="row"> Surname: {{surname}} </p>
+                </div>
+            </div>
+        </script>
+
+    </div>
+
+        <footer class="footer">
+
+            <div id="login_out">
+                <a href="/" class="logout" onclick="logoutHandler()">Logout</a>
+            </div>
+
+            <div class="search-container">
+                <form>
+                    <input type="text" id="userquery" placeholder="Search for a user.." name="search">
+                    <a onclick="searchUser()">Submit</a>
+                </form>
+            </div>
+
+        </footer>
 
 </body>
 </html>

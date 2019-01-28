@@ -15,7 +15,7 @@ form h2{
     color: #000000;
 }
 
-input[class="box"]{
+input.box{
     width: 100%;
     font-size: 16px;
     padding: 12px 20px;
@@ -43,7 +43,7 @@ input:focus, select:focus, textarea:focus, button:focus{
     outline: none;
 }
 
-input[class="box"]:hover {
+input.box:hover {
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;

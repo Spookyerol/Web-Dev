@@ -1,6 +1,6 @@
 // JavaScript source code for front-end client
 
-/* Toggle between adding and removing the "responsive" class to topnav when the user clicks on the icon */
+/* Toggle between adding and removing the "responsive" class when the user clicks on the icon */
 function makeBurger() {
     var x = document.getElementById("navbar");
     if (x.className === "navbar") {
@@ -10,6 +10,7 @@ function makeBurger() {
     }
 }
 
+/* Handles the dynamic rendering for the main pages */
 function navigateTo(pageName) {
     $.ajax({
         url: "/" + pageName,
@@ -60,11 +61,6 @@ function navigateTo(pageName) {
                         template = Handlebars.compile(source);
                         html = template(res);
                         $("#otherUserDetails").html(html);
-                    }
-                    else {
-                        if (pageName === "admin") {
-
-                        }
                     }
                 }
             }
@@ -138,6 +134,7 @@ function registerHandler() {
     });
 }
 
+/* Creates a new comment and updates the rendering of the board */
 function newComment() {
     content = { "comment": $("#comment").val() };
     $.ajax({
@@ -146,24 +143,17 @@ function newComment() {
         data: JSON.stringify(content),
         contentType: "application/json; charset=utf-8",
         success: function (res) {
-            renderComments(res, "#comments");
+            renderComments(res, "#comments"); //loads all comments into the main board
             console.log("Comment added.");
         },
 
-        error: function () {
-
+        error: function (res) {
+            console.log("Failed to add comment.");
         }
     });
 }
 
-function createComment(context) {
-    let source = $("#commentTemplate").html().trim();
-    let template = Handlebars.compile(source);
-    let html = template(context);
-    $("#comments").prepend(html);
-    return 0;
-}
-
+/* Renders comments into target */
 function renderComments(comments, target) {
     $(target).empty();
     for (let i in comments) {
@@ -177,20 +167,6 @@ function renderComments(comments, target) {
         $(target).prepend(html);
     }
     return 0;
-}
-
-function getComments() {
-    $.ajax({
-        url: "/main/comment",
-        type: "GET",
-        success: function (res) {
-            renderComments(res, "#comments");
-        },
-
-        error: function () {
-            console.log("Response not received.");
-        }
-    });
 }
 
 function changeStatus() {
@@ -259,6 +235,7 @@ function changeDetails() {
     });
 }
 
+/* Seach bar handler, search for a user or access admin page */
 function searchUser() {
     query = { "username": $("#userquery").val() };
     $.ajax({
@@ -267,6 +244,7 @@ function searchUser() {
         data: query,
         contentType: "application/json; charset=utf-8",
         success: function (res) {
+            $("a").removeClass("active");
             if (res.admin) {
                 let source = $("#adminData").html().trim();
                 let template = Handlebars.compile(source);
@@ -315,6 +293,7 @@ function deleteUser() {
         data: JSON.stringify({ "username": $("#banUsername").val() }),
         contentType: "application/json; charset=utf-8",
         success: function (res) {
+            $("a").removeClass("active");
             $("#showDetails").empty();
             let source = $("#adminData").html().trim();
             let template = Handlebars.compile(source);

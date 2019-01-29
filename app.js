@@ -24,21 +24,6 @@ let users = [
 
 let comments = [];
 
-ex_user = { //Example object
-    "username": "doctorwhocomposer",
-    "password": "password",
-    "forename": "Delia",
-    "surname": "Derbyshire",
-    "email": "Derby@mail.com",
-    "status": "Status: Feeling who?",
-    "access_token": "concertina"
-};
-
-ex_comment = { //Example comment
-    "username": "commenter",
-    "content": "SampleText"
-}
-
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
@@ -50,7 +35,7 @@ function findUser(username) {
     }
 }
 
-function filterComments(username) {
+function filterComments(username) { //filters comments by a user
     filtered = [];
     for (let i in comments) {
         if (comments[i].username === username) {
@@ -98,7 +83,7 @@ app.post('/login', function (req, res) {
                 break;
             }
             else {
-                req.userSession.loggedIn = true;
+                req.userSession.loggedIn = true; //sets cookie details
                 req.userSession.username = req.body.username;
                 req.userSession.access_token = findUser(req.body.username).access_token;
                 message = "Login Successful";
@@ -200,8 +185,8 @@ app.get('/people/doctorwhocomposer', function (req, res) {
     res.json(delia);
 });
 
-app.use(function (req, res, next) {
-    if (req.userSession.loggedIn) {
+app.use(function (req, res, next) { //authentication middleware, all routes under are protected
+    if (req.userSession.loggedIn) { //check cookie
         next();
     }
     else {
@@ -355,7 +340,7 @@ app.post('/people/delete', function (req, res) {
                 break;
             }
         }
-        let newComments = comments.filter(function (value, index, arr) {
+        let newComments = comments.filter(function (value, index, arr) { //clears out all comments made by user
             return user.username !== value.username;
         });
         comments = newComments;

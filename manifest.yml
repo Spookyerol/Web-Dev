@@ -1,0 +1,4 @@
+applications:
+- name: Web-dev-toolchain
+  radom-route: true
+  memory: 128M

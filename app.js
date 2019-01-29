@@ -373,4 +373,4 @@ app.post('/people/delete', function (req, res) {
     }
 })
 
-module.exports = app.listen(3000);
+module.exports = app;

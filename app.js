@@ -1,4 +1,5 @@
 // JavaScript source code
+/*eslint-disable no-unused-params, no-else-return*/
 let users = [
     {
         "username": "doctorwhocomposer",
@@ -20,7 +21,7 @@ let users = [
         "access_token": ""
     }
 
-]
+];
 
 let comments = [];
 
@@ -36,7 +37,7 @@ function findUser(username) {
 }
 
 function filterComments(username) { //filters comments by a user
-    filtered = [];
+    let filtered = [];
     for (let i in comments) {
         if (comments[i].username === username) {
             filtered.push(comments[i]);
@@ -72,12 +73,12 @@ app.post('/login', function (req, res) {
     let message;
     let status;
     for (let i in users) {
-        if (users[i].username != req.body.username) {
+        if (users[i].username !== req.body.username) {
             message = "Username does not exist.";
             status = 403;
         }
         else {
-            if (users[i].password != req.body.password) {
+            if (users[i].password !== req.body.password) {
                 message = "Incorrect password.";
                 status = 403;
                 break;
@@ -111,7 +112,7 @@ app.post('/register', function (req, res, next) {
             return 0;
         }
     }
-    if (req.body.password != req.body.retypePass) {
+    if (req.body.password !== req.body.retypePass) {
         console.log("Registration request for " + person + " failed. Cause: Passwords do not match.");
         res.status(400);
         res.send("Passwords do not match, please try again.");
@@ -137,7 +138,7 @@ app.post('/register', function (req, res, next) {
 
 app.post('/people', function (req, res, next) {
     const person = req.body.username;
-    if (req.body.access_token != "concertina") {
+    if (req.body.access_token !== "concertina") {
         res.status(403);
         res.send("403 Unautharized access_token.");
         return 0;
@@ -150,7 +151,7 @@ app.post('/people', function (req, res, next) {
             return 0;
         }
     }
-    if (req.body.password != req.body.retypePass) {
+    if (req.body.password !== req.body.retypePass) {
         console.log("Registration request for " + person + " failed. Cause: Passwords do not match.");
         res.status(400);
         res.send("Passwords do not match, please try again.");
@@ -192,13 +193,13 @@ app.use(function (req, res, next) { //authentication middleware, all routes unde
     else {
         res.status(403).json({
             message: "403 Request Denied.",
-        })
+        });
     }
 });
 
 app.get('/main', function (req, res) {
     const user = findUser(req.userSession.username);
-    status = user.status;
+    const status = user.status;
     if (status) {
         res.status(200);
         res.json({
@@ -214,9 +215,9 @@ app.get('/main', function (req, res) {
 });
 
 app.post('/main/comment', function (req, res) {
-    content = req.body.comment;
+    const content = req.body.comment;
     const user = req.userSession.username;
-    comment = { "username": user, "content": content }
+    let comment = { "username": user, "content": content };
     comments.push(comment);
     res.json(comments);
 });
@@ -228,7 +229,7 @@ app.get('/main/comment', function (req, res) {
 app.post('/main/status', function (req, res) {
     const status = req.body.status;
     const user = findUser(req.userSession.username);
-    user.status = statusl
+    user.status = status;
     res.status(200);
     res.json(status);
 });
@@ -246,39 +247,39 @@ app.get('/profile', function (req, res) {
 
 app.post('/profile/password', function (req, res) {
     const user = findUser(req.userSession.username);
-    if (req.body.oldPassword != user.password) {
-        res.status(401)
+    if (req.body.oldPassword !== user.password) {
+        res.status(401);
         res.send("Your old password is incorrect.");
         return 0;
     }
     else {
-        if (req.body.newPassword != req.body.newPassreType) {
-            res.status(401)
+        if (req.body.newPassword !== req.body.newPassreType) {
+            res.status(401);
             res.send("Your new password does not match.");
             return 0;
         }
     }
     user.password = req.body.newPassword;
-    res.status(200)
+    res.status(200);
     console.log("sent");
     res.send("Password successfully changed.");
 });
 
 app.post('/profile/details', function (req, res) {
     const user = findUser(req.userSession.username);
-    if (req.body.password != user.password) {
-        res.status(401)
+    if (req.body.password !== user.password) {
+        res.status(401);
         res.send("Your password is incorrect.");
         return 0;
     }
     else {
-        if (req.body.email != "") { //Block makes sure that fields left empty do not overwrite existing data
+        if (req.body.email !== "") { //Block makes sure that fields left empty do not overwrite existing data
             user.email = req.body.email;
         }
-        if (req.body.forename != "") {
+        if (req.body.forename !== "") {
             user.forename = req.body.forename;
         }
-        if (req.body.surname != "") {
+        if (req.body.surname !== "") {
             user.surname = req.body.surname;
         }
     }
@@ -356,6 +357,6 @@ app.post('/people/delete', function (req, res) {
         res.send("This user does not exist.");
         return 0;
     }
-})
+});
 
 module.exports = app;

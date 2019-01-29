@@ -1,3 +1,4 @@
 // JavaScript source code
 const app = require('./app');
-app.listen(3000);
+var port = process.env.VCAP_APP_PORT || 3000;
+app.listen(port);
